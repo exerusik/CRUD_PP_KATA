@@ -13,13 +13,12 @@ import java.util.List;
 public class UserDaoJDBCImpl implements UserDao {
     private final Connection connection = Util.getConnection();
 
-
     public UserDaoJDBCImpl() {
 
     }
 
     public void createUsersTable()  {
-       try ( Statement statement = connection.createStatement();) {
+       try (Statement statement = connection.createStatement();) {
            String sql = "CREATE TABLE IF NOT EXISTS User (\n" +
                    "  `id` INT NOT NULL AUTO_INCREMENT,\n" +
                    "  `name` VARCHAR(45) NOT NULL,\n" +
