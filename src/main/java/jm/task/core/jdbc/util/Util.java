@@ -19,10 +19,6 @@ public class Util {
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static SessionFactory sessionFactory;
 
-    public Util() {
-        sessionFactory = getSessionFactory();
-    }
-
 
     public static Connection getConnection() {
 

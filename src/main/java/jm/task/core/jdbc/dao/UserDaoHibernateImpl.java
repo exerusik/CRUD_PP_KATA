@@ -9,10 +9,10 @@ import org.hibernate.Transaction;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
-    private static final SessionFactory SESSION_FACTORY = Util.getSessionFactory();
+    private final SessionFactory SESSION_FACTORY;
 
     public UserDaoHibernateImpl() {
-
+        SESSION_FACTORY = Util.getSessionFactory();
     }
 
     @Override
@@ -61,8 +61,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = SESSION_FACTORY.openSession()) {
             transaction = session.beginTransaction();
 
-            User user = new User(name, lastName, age);
-            session.save(user);
+            session.save(new User(name, lastName, age));
 
             transaction.commit();
         } catch (Exception e) {
