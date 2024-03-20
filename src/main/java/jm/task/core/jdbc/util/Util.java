@@ -16,7 +16,12 @@ public class Util {
     private static final String URL = "jdbc:mysql://localhost:3306/mybase";
     private static final String LOGIN = "root";
     private static final String PASSWORD = "8020";
+    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static SessionFactory sessionFactory;
+
+    public Util() {
+        sessionFactory = getSessionFactory();
+    }
 
 
     public static Connection getConnection() {
@@ -31,31 +36,31 @@ public class Util {
     }
 
     public static SessionFactory getSessionFactory() {
-            try {
-                Configuration configuration = new Configuration();
+        try {
+            Configuration configuration = new Configuration();
 
-                Properties settings = new Properties();
-                settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-                settings.put(Environment.URL, "jdbc:mysql://localhost:3306/mybase");
-                settings.put(Environment.USER, "root");
-                settings.put(Environment.PASS, "8020");
-                settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
+            Properties settings = new Properties();
+            settings.put(Environment.DRIVER, DRIVER);
+            settings.put(Environment.URL, URL);
+            settings.put(Environment.USER, LOGIN);
+            settings.put(Environment.PASS, PASSWORD);
+            settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
 
-                settings.put(Environment.SHOW_SQL, "true");
+            settings.put(Environment.SHOW_SQL, "true");
 
-                settings.put(Environment.HBM2DDL_AUTO, "create-drop");
+            settings.put(Environment.HBM2DDL_AUTO, "create-drop");
 
-                configuration.setProperties(settings);
+            configuration.setProperties(settings);
 
-                configuration.addAnnotatedClass(User.class);
+            configuration.addAnnotatedClass(User.class);
 
-                ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                        .applySettings(configuration.getProperties()).build();
+            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                    .applySettings(configuration.getProperties()).build();
 
-                sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return sessionFactory;
     }

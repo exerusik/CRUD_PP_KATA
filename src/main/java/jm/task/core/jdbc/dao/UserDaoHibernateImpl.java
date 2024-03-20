@@ -61,10 +61,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = SESSION_FACTORY.openSession()) {
             transaction = session.beginTransaction();
 
-            User user = new User();
-            user.setName(name);
-            user.setLastName(lastName);
-            user.setAge(age);
+            User user = new User(name, lastName, age);
             session.save(user);
 
             transaction.commit();
@@ -82,7 +79,6 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = SESSION_FACTORY.openSession()) {
             transaction = session.beginTransaction();
 
-//            session.createSQLQuery("DELETE FROM User where id=" + id).executeUpdate();
             User user = session.get(User.class, id);
             session.delete(user);
 
